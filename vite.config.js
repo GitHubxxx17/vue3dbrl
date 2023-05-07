@@ -7,7 +7,7 @@ import { VantResolver } from 'unplugin-vue-components/resolvers';
 export default defineConfig({
   base: '/vue3dbrl/',
   lintOnSave: false,
-  publicPath: process.env.NODE_ENV == "production"?"./":"/",
+  publicPath: process.env.NODE_ENV == "production"?"/vue3dbrl/":"/",
   plugins: [vue(),
   Components({
     resolvers: [VantResolver()],
