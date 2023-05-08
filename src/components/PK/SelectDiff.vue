@@ -90,7 +90,7 @@ let ifClickSelect = (target) => {
   }
   selectData.selectErrorTip = false; //选择模板就不显示错误
 };
-let select_card = ref(null).value;
+let select_card = ref(null);
 //选择困难程度
 let ifClickDiff = (target) => {
   for (let index = 0; index < selectData.ifDiff.length; index++) {
@@ -243,7 +243,7 @@ let startGame = () => {
 //挂载完成后的处理
 onMounted(() => {
   // 选择pk难度
-  let buttons = [...select_card.children];
+  let buttons = [...select_card.value.children];
   for (let index = 0; index < buttons.length; index++) {
     buttons[index].addEventListener("click", () => {
       ifClickDiff(index);

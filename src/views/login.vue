@@ -162,11 +162,11 @@ import {
 } from "@/request/api/user.js";
 import { localSaveData, sessionSaveData } from "@/hooks/useStorage.js";
 import { mainStore } from "@/stores";
-let change = ref(null).value;
-let loginbox = ref(null).value;
+let change = ref(null);
+let loginbox = ref(null);
 let labels = ref([]);
 let inputs = ref([]);
-let canvas = ref(null).value;
+let canvas = ref(null);
 let loginErr = ref(null);
 let registerErr = ref(null);
 let mainstore = mainStore();
@@ -201,15 +201,15 @@ let inputRef = (el) => {
 };
 //点击切换到登录
 let changeRegister = () => {
-  loginbox.style.top = "142vw";
-  change.style.top = "-8vw";
-  change.innerHTML = "已有账号，去登录";
+  loginbox.value.style.top = "142vw";
+  change.value.style.top = "-8vw";
+  change.value.innerHTML = "已有账号，去登录";
 };
 //点击切换到注册
 let changeLogin = () => {
-  loginbox.style.top = "36vw";
-  change.style.top = "-25vw";
-  change.innerHTML = "没有账号，去注册";
+  loginbox.value.style.top = "36vw";
+  change.value.style.top = "-25vw";
+  change.value.innerHTML = "没有账号，去注册";
 };
 let phoneReg = /^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\d{8}$/;
 let passwordReg = /^[a-zA-Z0-9_]{6,16}$/;
@@ -397,12 +397,12 @@ function drawline(canvas, context) {
   context.beginPath();
   //起点与终点在canvas宽高内随机
   context.moveTo(
-    Math.floor(Math.random() * canvas.width),
-    Math.floor(Math.random() * canvas.height)
+    Math.floor(Math.random() * canvas.value.width),
+    Math.floor(Math.random() * canvas.value.height)
   );
   context.lineTo(
-    Math.floor(Math.random() * canvas.width),
-    Math.floor(Math.random() * canvas.height)
+    Math.floor(Math.random() * canvas.value.width),
+    Math.floor(Math.random() * canvas.value.height)
   );
   context.lineWidth = 1;
   context.strokeStyle = "#000";
@@ -413,10 +413,10 @@ function drawline(canvas, context) {
 function createCode() {
   //每次生成code先将其清空防止叠加
   code.value = "";
-  var context = canvas.getContext("2d");
-  context.clearRect(0, 0, canvas.width, canvas.height);
+  var context = canvas.value.getContext("2d");
+  context.clearRect(0, 0, canvas.value.width, canvas.value.height);
   context.strokeStyle = "#FFF";
-  context.strokeRect(0, 0, canvas.width, canvas.height);
+  context.strokeRect(0, 0, canvas.value.width, canvas.value.height);
 
   //生成干扰线，数量随意
   for (let i = 0; i < 30; i++) {

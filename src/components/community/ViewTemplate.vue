@@ -104,22 +104,22 @@ const flashStore = CommunityStore();
 let tpData = tpStore(); // 获取记忆库和收藏库模板
 let userData = userStore(); // 获取用户数据
 
-let text_box = ref(null).value;
-let title = ref(null).value;
-let shoucang = ref(null).value; // 获取收藏对象
-let dianzan = ref(null).value; // 获取点赞对象
-let del = ref(null).value; //删除
+let text_box = ref(null);
+let title = ref(null);
+let shoucang = ref(null); // 获取收藏对象
+let dianzan = ref(null); // 获取点赞对象
+let del = ref(null); //删除
 
 //当进入浏览页面时将内容添加进去
 onMounted(() => {
   if (flashStore.showLi.show) {
-    text_box.innerHTML = flashStore.showLi.curFlash.content;
-    title.innerHTML = flashStore.showLi.curFlash.modleTitle;
+    text_box.value.innerHTML = flashStore.showLi.curFlash.content;
+    title.value.innerHTML = flashStore.showLi.curFlash.modleTitle;
   }
 
-  dianzan.onclick = useDebounce(async (e) => {
+  dianzan.value.onclick = useDebounce(async (e) => {
     // 如果已经是被收藏的则移除收藏
-    if (dianzan.children[1].classList.contains("orange")) {
+    if (dianzan.value.children[1].classList.contains("orange")) {
       let res = await LikeOrDisLike(
         flashStore.showLi.curFlash.modleId,
         false,
@@ -130,9 +130,9 @@ onMounted(() => {
         flashStore.showLi.curFlash.likeStatus = false;
         flashStore.showLi.curFlash.likeNum--;
       }
-      dianzan.children[0].classList.remove("icon-dianzan1");
-      dianzan.children[0].classList.add("icon-dianzan");
-      dianzan.children[1].classList.remove("orange");
+      dianzan.value.children[0].classList.remove("icon-dianzan1");
+      dianzan.value.children[0].classList.add("icon-dianzan");
+      dianzan.value.children[1].classList.remove("orange");
     } else {
       let res = await LikeOrDisLike(
         flashStore.showLi.curFlash.modleId,
@@ -144,22 +144,22 @@ onMounted(() => {
         flashStore.showLi.curFlash.likeStatus = true;
         flashStore.showLi.curFlash.likeNum = res.data.msg.data.likeNum;
       }
-      dianzan.children[0].classList.add("icon-dianzan1");
-      dianzan.children[0].classList.remove("icon-dianzan");
-      dianzan.children[1].classList.add("orange");
+      dianzan.value.children[0].classList.add("icon-dianzan1");
+      dianzan.value.children[0].classList.remove("icon-dianzan");
+      dianzan.value.children[1].classList.add("orange");
     }
   }, 500);
 });
 watch(
   () => flashStore.showLi.curFlash,
   () => {
-    text_box.innerHTML = flashStore.showLi.curFlash.content;
+    text_box.value.innerHTML = flashStore.showLi.curFlash.content;
   }
 );
 
 const oncollect = useDebounce(async (e) => {
   // 如果已经是被收藏的则移除收藏
-  if (shoucang.children[1].classList.contains("orange")) {
+  if (shoucang.value.children[1].classList.contains("orange")) {
     flashStore.showLi.collected = false;
     // 将当前模板从收藏库移除
     for (let index = 0; index < tpData.tp.length; index++) {

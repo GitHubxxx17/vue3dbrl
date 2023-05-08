@@ -24,7 +24,7 @@ import { reactive, ref, watch,onMounted } from "vue";
 import { tpStore } from "@/stores";
 const props = defineProps(["tp"]);
 const tpData = tpStore();
-let info = ref(null).value
+let info = ref(null)
 watch(
   () => props.tp.studyStatus,
   () => {
@@ -41,7 +41,7 @@ let classObj = reactive({
   learned: props.tp.studyStatus == "已学习",
 });
 onMounted(() => {
-  info.innerHTML = props.tp.content
+  info.value.innerHTML = props.tp.content
 })
 </script>
 

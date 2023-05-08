@@ -91,7 +91,7 @@ import { periodStore,tpStore,learnStore } from "@/stores";
 const periodData = periodStore();
 const learnData = learnStore();
 const tpData = tpStore();
-let review_line = ref(null).value;
+let review_line = ref(null);
 const state = reactive({
   ModlesOfPeriod: [], //复习周期
 });
@@ -135,19 +135,19 @@ const changeStore = async() => {
     return pre + cur.length;
   }, 0);
   //渲染进度条
-  review_line.children[0].style.width =
+  review_line.value.children[0].style.width =
     (periodData.reviewNums /
       (periodData.reviewNums + periodData.numOfArticles)) *
-      review_line.offsetWidth +
+      review_line.value.offsetWidth +
     "px";
 }
 
 onUpdated(() => {
   //渲染进度条
-  review_line.children[0].style.width =
+  review_line.value.children[0].style.width =
     (periodData.reviewNums /
       (periodData.reviewNums + periodData.numOfArticles)) *
-      review_line.offsetWidth +
+      review_line.value.offsetWidth +
     "px";
 });
 

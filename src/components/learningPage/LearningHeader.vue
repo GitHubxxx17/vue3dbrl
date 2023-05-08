@@ -36,13 +36,13 @@ const props = defineProps(["tp", "newTp"]);
 const learnstore = learnStore();
 //标签
 let label = ["考研", "教资", "通识课"];
-let label_menu = ref(null).value;
-let title = ref(null).value;
+let label_menu = ref(null);
+let title = ref(null);
 //点击出现下拉列表
 const showMenu = (e) => {
   if (learnstore.isEdit) {
     e.stopPropagation();
-    label_menu.style.transform = "scale(1)";
+    label_menu.value.style.transform = "scale(1)";
   }
 };
 
@@ -50,15 +50,15 @@ const showMenu = (e) => {
 const changeLabel = (e) => {
   if (e.target.tagName == "LI") {
     props.newTp.label = e.target.innerHTML;
-    label_menu.style.transform = "scale(0)";
+    label_menu.value.style.transform = "scale(0)";
   }
 };
 //监听编辑
 watch(
   () => learnstore.isEdit,
   (newvalue, oldvalue) => {
-    if (newvalue) title.disabled = false;
-    if (oldvalue) title.disabled = true;
+    if (newvalue) title.value.disabled = false;
+    if (oldvalue) title.value.disabled = true;
   }
 );
 

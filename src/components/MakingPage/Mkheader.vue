@@ -43,21 +43,21 @@ import { upload } from "@/request/api/memory.js";
 const props = defineProps(["tp"]);
 const mkstore = mkStore();
 const tpstore = tpStore();
-let ball = ref(null).value;
-let switchRef = ref(null).value;
-let tips = ref(null).value;
-let upload_form = ref(null).value;
+let ball = ref(null);
+let switchRef = ref(null);
+let tips = ref(null);
+let upload_form = ref(null);
 //识别挖空开关
 const switchWk = () => {
-  if (ball.offsetLeft == 0) {
-    ball.style.left = 25 / 3.95 + "vw";
-    ball.style.backgroundColor = "#b6a2f0";
-    switchRef.style.backgroundColor = "#8777ae";
+  if (ball.value.offsetLeft == 0) {
+    ball.value.style.left = 25 / 3.95 + "vw";
+    ball.value.style.backgroundColor = "#b6a2f0";
+    switchRef.value.style.backgroundColor = "#8777ae";
     mkstore.isIdentifyWk = true;
   } else {
-    ball.style.left = 0 + "px";
-    ball.style.backgroundColor = "#bfbfbf";
-    switchRef.style.backgroundColor = "#b1adbb";
+    ball.value.style.left = 0 + "px";
+    ball.value.style.backgroundColor = "#bfbfbf";
+    switchRef.value.style.backgroundColor = "#b1adbb";
     mkstore.isIdentifyWk = false;
   }
 };
@@ -92,8 +92,8 @@ const popupShow = (e) => {
 watch(
   () => mkstore.tipsIsShow,
   (newvalue, oldvalue) => {
-    if (newvalue) tips.style.transform = "scale(1)";
-    if (oldvalue) tips.style.transform = "scale(0)";
+    if (newvalue) tips.value.style.transform = "scale(1)";
+    if (oldvalue) tips.value.style.transform = "scale(0)";
   }
 );
 //上传文件
@@ -102,7 +102,7 @@ const uploadFile = async (e) => {
   console.log(file);
   if (e.target.files.length != 0) {
     mkstore.isLoading = true; //上传动画
-    let fd = new FormData(upload_form);
+    let fd = new FormData(upload_form.value);
     let res = await upload(fd);
     console.log(res);
     if (res.data.msg.code == 200) {

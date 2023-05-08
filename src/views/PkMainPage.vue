@@ -71,8 +71,8 @@ let userData = userStore(); // 获取用户数据
 let mainData = mainStore();
 
 let seasonRole = ref("src/assets/level/1.png"); // 获取段位图片路径
-let seasonName = ref(null).value; // 获取段位名称对象
-let star = ref(null).value; // 获取星星对象
+let seasonName = ref(null); // 获取段位名称对象
+let star = ref(null); // 获取星星对象
 
 if (mainData.isPk) {
   pkData.selectIsShow = false;
@@ -82,37 +82,37 @@ if (mainData.isPk) {
 function season() {
   switch (Math.floor(pkData.stars / 5)) {
     case 0:
-      seasonName.innerHTML = "初级学士";
+      seasonName.value.innerHTML = "初级学士";
       seasonRole.value = "src/assets/level/1.png";
       break;
     case 1:
-      seasonName.innerHTML = "中级学士";
+      seasonName.value.innerHTML = "中级学士";
       seasonRole.value = "src/assets/level/2.png";
       break;
     case 2:
-      seasonName.innerHTML = "高级学士";
+      seasonName.value.innerHTML = "高级学士";
       seasonRole.value = "src/assets/level/3.png";
       break;
     case 3:
-      seasonName.innerHTML = "初级硕士";
+      seasonName.value.innerHTML = "初级硕士";
       seasonRole.value = "src/assets/level/4.png";
       break;
     case 4:
-      seasonName.innerHTML = "高级硕士";
+      seasonName.value.innerHTML = "高级硕士";
       seasonRole.value = "src/assets/level/5.png";
       break;
     case 5:
-      seasonName.innerHTML = "博士";
+      seasonName.value.innerHTML = "博士";
       seasonRole.value = "src/assets/level/6.png";
       break;
     default:
-      seasonName.innerHTML = "博士";
+      seasonName.value.innerHTML = "博士";
       seasonRole.value = "src/assets/level/1.png";
       break;
   }
   let starNum = pkData.stars >= 30 ? 5 : pkData.stars % 5;
   for (let i = 0; i < starNum; i++) {
-    star.children[i].classList.add("active");
+    star.value.children[i].classList.add("active");
   }
 }
 watch(

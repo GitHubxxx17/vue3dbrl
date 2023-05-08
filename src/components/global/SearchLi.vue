@@ -26,8 +26,8 @@ let liData = props.liData;
 const communityData = CommunityStore();
 let searchData = communityData.searchData;
 
-let modleInfo = ref(null).value;
-let modelTitle = ref(null).value;
+let modleInfo = ref(null);
+let modelTitle = ref(null);
 let tempTitle = ""; // 暂替modelTitle
 
 // 给关键字加样式
@@ -85,8 +85,8 @@ for (let i = 0; i < searchData.searchValue.length; i++) {
 }
 
 onMounted(() => {
-  modelTitle.innerHTML = liData.modleTitle;
-  modleInfo.innerHTML = liData.content;
+  modelTitle.value.innerHTML = liData.modleTitle;
+  modleInfo.value.innerHTML = liData.content;
 });
 </script>
 

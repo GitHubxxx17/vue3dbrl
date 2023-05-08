@@ -52,14 +52,14 @@ const Newtp = reactive({
   modleTitle: "",
   label: "标签",
 });
-let text_box = ref(null).value;
-let label_menu = ref(null).value;
+let text_box = ref(null);
+let label_menu = ref(null);
 mkstore.popup2IsShow = false;
 mkstore.popupisShow = false;
 mkstore.tipsIsShow = false;
 //点击隐藏
 const hiddenSome = () => {
-  label_menu.style.transform = "scale(0)";
+  label_menu.value.style.transform = "scale(0)";
   mkstore.tipsIsShow = false;
   mkstore.popupisShow = false;
   mkstore.popup2IsShow = false;
@@ -71,27 +71,27 @@ const popupShow = (e) => {
 //点击出现下拉列表
 const showMenu = (e) => {
   e.stopPropagation();
-  label_menu.style.transform = "scale(1)";
+  label_menu.value.style.transform = "scale(1)";
 };
 //事件委托，为li绑定事件
 const changeLabel = (e) => {
   e.stopPropagation();
   if (e.target.tagName == "LI") {
     Newtp.label = e.target.innerHTML;
-    label_menu.style.transform = "scale(0)";
+    label_menu.value.style.transform = "scale(0)";
   }
 };
 //监听内容改变
 watch(
   () => Newtp.context,
   () => {
-    text_box.innerHTML = Newtp.context;
+    text_box.value.innerHTML = Newtp.context;
   }
 );
 //点击保存
 async function save() {
   let res = await MakeModle(
-    text_box.innerHTML,
+    text_box.value.innerHTML,
     Newtp.modleTitle,
     0,
     tpstore.switchLabel(false, Newtp.label)

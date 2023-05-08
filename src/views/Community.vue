@@ -150,15 +150,15 @@ let clickLable = (target) => {
       selectLable.value[index] = true;
     }
   }
-  flash_ul.scrollTop = 0;
+  flash_ul.value.scrollTop = 0;
   getTempData(target, 0, userstore.user.token); // 获取当前target标签下的模板
 };
 //挂载后处理的事件
-let flash_ul = ref(null).value; // 获取社区展示列表
-let footerLoading = ref(null).value; // 获取正在加载
+let flash_ul = ref(null); // 获取社区展示列表
+let footerLoading = ref(null); // 获取正在加载
 onMounted(() => {
-  flash_ul.addEventListener("scroll", function () {
-    if (flash_ul.scrollTop > 0) {
+  flash_ul.value.addEventListener("scroll", function () {
+    if (flash_ul.value.scrollTop > 0) {
       disabled.value = true;
     } else {
       disabled.value = false;

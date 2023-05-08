@@ -18,9 +18,9 @@
 <script setup>
 import {onMounted,ref} from 'vue';
 const props = defineProps(['tp','isUpload']);
-let info = ref(null).value;
+let info = ref(null);
 onMounted(() => {
-  info.innerHTML = props.tp.content
+  info.value.innerHTML = props.tp.content
 })
 </script>
 <style scoped lang="less">

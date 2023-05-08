@@ -116,9 +116,9 @@ const month_names = [
 let curDate = new Date(); // 获取日期时间戳
 let curMonth = ref(curDate.getMonth()); // 月份数据的下标
 let monthPicker = ref(month_names[curMonth.value]); // 记录动态月份
-let calendar_days = ref(null).value; // 记录动态日期表
+let calendar_days = ref(null); // 记录动态日期表
 let header_year = ref(curDate.getFullYear()); // 记录动态年份
-let month_list = ref(null).value; //月份列表显示
+let month_list = ref(null); //月份列表显示
 let isClock = ref("今日还未打卡"); // 显示是否打卡
 let isQianDao = ref("签到"); // 显示是否签到
 let today; // 记录当天标签
@@ -155,7 +155,7 @@ onMounted(() => {
     clock_day = [];
     //获取打卡日
     await getClockInRecordFun(header_year.value, curMonth.value);
-    calendar_days.innerHTML = "";
+    calendar_days.value.innerHTML = "";
     //获取每个月的第一天
     let first_day = new Date(year, month, 1);
     for (let i = 0; i <= days_of_month[month] + first_day.getDay() - 1; i++) {
@@ -183,7 +183,7 @@ onMounted(() => {
           today = day;
         }
       }
-      calendar_days.appendChild(day);
+      calendar_days.value.appendChild(day);
     }
   }
   generateCalendar(header_year.value, curMonth.value);
@@ -205,18 +205,18 @@ onMounted(() => {
     let month = document.createElement("div");
     month.innerHTML = `<div data-month="${index}">${e}</div>`;
     month.querySelector("div").onclick = (e) => {
-      month_list.classList.remove("show");
+      month_list.value.classList.remove("show");
       monthPicker.value = month_names[index];
       curMonth.value = index;
       generateCalendar(header_year.value, index);
       e.stopPropagation();
     };
-    month_list.appendChild(month);
+    month_list.value.appendChild(month);
   });
 
   // 展示月份列表
   showMonth = (e) => {
-    month_list.classList.add("show");
+    month_list.value.classList.add("show");
     e.stopPropagation();
   };
 });

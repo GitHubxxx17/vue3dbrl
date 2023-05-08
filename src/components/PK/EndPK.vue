@@ -85,9 +85,9 @@ let enterPkData = pkData.enterPkData;
 let endPkData = pkData.endPkData; // 结束pk的数据
 let rivalMsg = pkData.rivalMsg; // 结束pk的数据
 
-let myAnswer = ref(null).value; // 我的答案
-let answer = ref(null).value; // 正确答案
-let otherPortrait = ref(null).value; // 头像
+let myAnswer = ref(null); // 我的答案
+let answer = ref(null); // 正确答案
+let otherPortrait = ref(null); // 头像
 
 let myStart = ref(0);
 let otherStart = ref(0);
@@ -104,8 +104,8 @@ let ResetEndPK = () => {
     pkData.resetAnswer();
     pkData.resetRivalMsg();
     pkData.closeWS();
-    answer.innerHTML = endPkData.answer;
-    myAnswer.innerHTML = endPkData.myAnswer;
+    answer.value.innerHTML = endPkData.answer;
+    myAnswer.value.innerHTML = endPkData.myAnswer;
   }, 1000);
 };
 function RefreshWinOrLose(winnerId) {
@@ -130,9 +130,9 @@ function RefreshWinOrLose(winnerId) {
   }
 }
 onMounted(() => {
-  otherPortrait.innerHTML = rivalMsg.portrait;
-  myAnswer.innerHTML = endPkData.myAnswer;
-  answer.innerHTML = endPkData.answer;
+  otherPortrait.value.innerHTML = rivalMsg.portrait;
+  myAnswer.value.innerHTML = endPkData.myAnswer;
+  answer.value.innerHTML = endPkData.answer;
   RefreshWinOrLose(endPkData.winnerId);
 });
 </script>

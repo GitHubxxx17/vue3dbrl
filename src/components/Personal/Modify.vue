@@ -25,7 +25,7 @@ import {userStore} from "@/stores";
 import {ReMessage} from "@/request/api/user.js"
 const props = defineProps(['index'])
 let userstore = userStore();
-let modifyErr = ref(null).value;
+let modifyErr = ref(null);
 const state = reactive({
   key:['nickName','phone','password'],
   modifyArr:['修改昵称', '修改手机号', '修改密码'],
@@ -42,13 +42,13 @@ const confirm = async ($router,e) => {
       userstore.user[state.key[props.index]] = state.value;
       userstore.ModifyisShow = false;
     }else{
-       modifyErr.innerHTML = res.data.msg.content;
-       modifyErr.style.opacity = '1';
+       modifyErr.value.innerHTML = res.data.msg.content;
+       modifyErr.value.style.opacity = '1';
     }
     console.log(res)
   }else{
-    modifyErr.innerHTML = state.modifyErrArr[props.index];
-    modifyErr.style.opacity = '1';
+    modifyErr.value.innerHTML = state.modifyErrArr[props.index];
+    modifyErr.value.style.opacity = '1';
   }
 }
 

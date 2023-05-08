@@ -62,7 +62,7 @@
 
 <script setup>
 // 引入内置函数
-import { ref, onMounted } from "vue";
+import { ref, onMounted, reactive } from "vue";
 // 引入社区的api
 import {
   collect,
@@ -75,8 +75,8 @@ import useDebounce from "@/hooks/useDebounce.js";
 let tpData = tpStore(); // 获取记忆库和收藏库模板
 let userData = userStore(); // 获取用户数据
 const props = defineProps(["flash"]);
-let info = ref(null).value;
-let flash = ref(props.flash).value; // 刷新模板数据
+let info = ref(null);
+let flash = reactive(props.flash); // 刷新模板数据
 let token = userData.user.token;
 let ismind = ref(false); // 判断是否是自己的模板
 if (userData.user.userId == flash.userId) {
@@ -98,13 +98,13 @@ const showPopup = (flash) => {
   flashStore.showLi.ismind = ismind.value;
 };
 
-let shoucang = ref(null).value; // 获取收藏对象
-let dianzan = ref(null).value; // 获取点赞对象
+let shoucang = ref(null); // 获取收藏对象
+let dianzan = ref(null); // 获取点赞对象
 let collected = ref(false); // 记录是否收藏
 let liked = ref(false); // 记录是否点赞
 
 onMounted(() => {
-  info.innerHTML = props.flash.content
+  info.value.innerHTML = props.flash.content
 
   for (let index = 0; index < tpData.tp.length; index++) {
     if (tpData.tp[index].modleId == flash.modleId && tpData.tp[index].MStatus) {
@@ -112,9 +112,9 @@ onMounted(() => {
     }
   }
 
-  shoucang.onclick = useDebounce(async (e) => {
+  shoucang.value.onclick = useDebounce(async (e) => {
     // 如果已经是被收藏的则移除收藏
-    if (shoucang.children[1].classList.contains("orange")) {
+    if (shoucang.value.children[1].classList.contains("orange")) {
       collected.value = false;
       // 将当前模板从收藏库移除
       for (let index = 0; index < tpData.tp.length; index++) {
@@ -140,18 +140,18 @@ onMounted(() => {
     }
   }, 500);
 
-  dianzan.onclick = useDebounce(async (e) => {
+  dianzan.value.onclick = useDebounce(async (e) => {
     // 如果已经是被收藏的则移除收藏
-    if (dianzan.children[1].classList.contains("orange")) {
+    if (dianzan.value.children[1].classList.contains("orange")) {
       let res = await LikeOrDisLike(flash.modleId, false, token);
       console.log("取消点赞成功", res);
       if (res.data.msg.content == "取消点赞") {
         flash.likeStatus = false;
         flash.likeNum--;
       }
-      dianzan.children[0].classList.remove("icon-dianzan1");
-      dianzan.children[0].classList.add("icon-dianzan");
-      dianzan.children[1].classList.remove("orange");
+      dianzan.value.children[0].classList.remove("icon-dianzan1");
+      dianzan.value.children[0].classList.add("icon-dianzan");
+      dianzan.value.children[1].classList.remove("orange");
     } else {
       let res = await LikeOrDisLike(flash.modleId, true, token);
       console.log("点赞成功", res);
@@ -159,9 +159,9 @@ onMounted(() => {
         flash.likeStatus = true;
         flash.likeNum = res.data.msg.data.likeNum;
       }
-      dianzan.children[0].classList.add("icon-dianzan1");
-      dianzan.children[0].classList.remove("icon-dianzan");
-      dianzan.children[1].classList.add("orange");
+      dianzan.value.children[0].classList.add("icon-dianzan1");
+      dianzan.value.children[0].classList.remove("icon-dianzan");
+      dianzan.value.children[1].classList.add("orange");
     }
   }, 500);
 });

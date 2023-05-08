@@ -106,11 +106,11 @@ let enterPkData = pkData.enterPkData; // 获取进入pk的数据
 let endPkData = pkData.endPkData;
 let rivalMsg = pkData.rivalMsg; // 获取对手信息
 
-let PkTemplate = ref(null).value; //获取放pk模板的对象
-let option = ref(null).value; // 获取选项对象
-let otherPortrait = ref(null).value; // 获取对头头像对象
-let myHP = ref(null).value; // 获取己方血条
-let otherHP = ref(null).value; // 获取对方血条
+let PkTemplate = ref(null); //获取放pk模板的对象
+let option = ref(null); // 获取选项对象
+let otherPortrait = ref(null); // 获取对头头像对象
+let myHP = ref(null); // 获取己方血条
+let otherHP = ref(null); // 获取对方血条
 
 // 渲染血量
 let myBlood = ref("100%");
@@ -182,19 +182,19 @@ function closePK() {
 let highlightTop; // 记录滚动条高度
 onMounted(() => {
   //初始化血条
-  myHP.style.width = 38.13 + "vw";
+  myHP.value.style.width = 38.13 + "vw";
   let pkChildren = reactive([]);
   // 刷新模板
   function reflashTemp() {
     enterPkData.answerIndex = 0;
-    PkTemplate.innerHTML = enterPkData.PkTemplate; // 填pk模板
-    otherPortrait.innerHTML = rivalMsg.portrait;
+    PkTemplate.value.innerHTML = enterPkData.PkTemplate; // 填pk模板
+    otherPortrait.value.innerHTML = rivalMsg.portrait;
     // 置空下列数组
     enterPkData.answerArr = [];
     enterPkData.selectArr = [];
     pkChildren = [];
     // 让模板变为背诵模式
-    for (let x of PkTemplate.children) {
+    for (let x of PkTemplate.value.children) {
       if (x.tagName == "DIV") {
         // 判断是否包裹着div标签
         pkChildren.push(x);
@@ -215,7 +215,7 @@ onMounted(() => {
     ); // 随机填好四个选项
     // 获取当前选择的选项的offsetTop
     highlightTop = pkChildren[enterPkData.answerIndex].offsetTop;
-    PkTemplate.scrollTo({
+    PkTemplate.value.scrollTo({
       top: highlightTop - 400,
       behavior: "smooth",
     });
@@ -256,7 +256,7 @@ onMounted(() => {
 
     // 获取当前选择的选项的offsetTop
     highlightTop = pkChildren[enterPkData.answerIndex].offsetTop;
-    PkTemplate.scrollTo({
+    PkTemplate.value.scrollTo({
       top: highlightTop - 400,
       behavior: "smooth",
     });
@@ -268,7 +268,7 @@ onMounted(() => {
     if (enterPkData.answerIndex < enterPkData.answerArr.length) {
       // 对比答案是否正确
       if (
-        option.children[index].children[1].innerHTML ==
+        option.value.children[index].children[1].innerHTML ==
         enterPkData.answerArr[enterPkData.answerIndex]
       ) {
         pkChildren[enterPkData.answerIndex].classList.add("right"); // 当前答案正确的话 标绿
@@ -278,7 +278,7 @@ onMounted(() => {
         enterPkData.UserSelectArr.push("right"); // 存放当前选择的答案
         pkData.ws.send(
           JSON.stringify({
-            answerName: option.children[index].children[1].innerHTML,
+            answerName: option.value.children[index].children[1].innerHTML,
             answerValue: true,
           })
         );
@@ -286,11 +286,11 @@ onMounted(() => {
         pkChildren[enterPkData.answerIndex].classList.add("wrong"); // 当前答案不正确的话 标红
         pkChildren[enterPkData.answerIndex].innerHTML =
           enterPkData.answerArr[enterPkData.answerIndex];
-        option.children[index].classList.add("shake"); // 抖动效果
+        option.value.children[index].classList.add("shake"); // 抖动效果
         enterPkData.UserSelectArr.push("wrong");
         pkData.ws.send(
           JSON.stringify({
-            answerName: option.children[index].children[1].innerHTML,
+            answerName: option.value.children[index].children[1].innerHTML,
             answerValue: false,
           })
         );
@@ -322,18 +322,18 @@ onMounted(() => {
           let hp = Math.round(hpMsg[0].hp);
           if (hpMsg[0].userId == userData.user.token) {
             console.log(hpMsg);
-            myHP.style.width = (hp / 100) * 38.13 + "vw";
+            myHP.value.style.width = (hp / 100) * 38.13 + "vw";
             myBlood.value = hp + "%";
           } else {
-            otherHP.style.width = (hp / 100) * 38.13 + "vw";
+            otherHP.value.style.width = (hp / 100) * 38.13 + "vw";
             otherBlood.value = hp + "%";
           }
           hp = Math.round(hpMsg[1].hp);
           if (hpMsg[1].userId == userData.user.token) {
-            myHP.style.width = (hp / 100) * 38.13 + "vw";
+            myHP.value.style.width = (hp / 100) * 38.13 + "vw";
             myBlood.value = hp + "%";
           } else {
-            otherHP.style.width = (hp / 100) * 38.13 + "vw";
+            otherHP.value.style.width = (hp / 100) * 38.13 + "vw";
             otherBlood.value = hp + "%";
           }
         }
@@ -357,10 +357,10 @@ onMounted(() => {
         //对方已经逃跑
         if (res.ENEMY_EXIT) {
           console.log(" 对方已跑");
-          otherHP.style.width = "0";
+          otherHP.value.style.width = "0";
           setTimeout(() => {
             isHasRun.value = true;
-            otherPortrait.innerHTML = `<img scr= "../../assets/头像/连接断开.png"/>`;
+            otherPortrait.value.innerHTML = `<img scr= "../../assets/头像/连接断开.png"/>`;
           }, 700);
           if (userData.user.token != res.runId) {
             endPkData.winnerId = userData.user.token;

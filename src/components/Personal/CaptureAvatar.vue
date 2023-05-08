@@ -29,19 +29,19 @@ import { userStore } from "@/stores";
 const props = defineProps(["curImg"]);
 const emit = defineEmits(['onSaveImg']);
 const userData = userStore();
-let img_obj = ref(null).value;
-let canvas_div = ref(null).value;
-let can_obj = ref(null).value;
+let img_obj = ref(null);
+let canvas_div = ref(null);
+let can_obj = ref(null);
 onMounted(() => {
   //等图片加载完成后调用裁剪图片函数
-  img_obj.onload = () => {
-    userCaptureAvatar(can_obj, img_obj, canvas_div);
+  img_obj.value.onload = () => {
+    userCaptureAvatar(can_obj.value, img_obj.value, canvas_div.value);
   };
 });
 //保存图片
 function save_img() {
   let fd = new FormData();
-  let base64 = can_obj.toDataURL("image/jpeg", 1 || 0.8);
+  let base64 = can_obj.value.toDataURL("image/jpeg", 1 || 0.8);
   let tofile = dataURLtoFile(base64, "image", "image/jpeg");
   fd.append("image", tofile);
   emit('onSaveImg',fd,base64);

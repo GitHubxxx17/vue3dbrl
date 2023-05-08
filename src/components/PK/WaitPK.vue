@@ -89,12 +89,12 @@ let waitPkData = pkData.waitPkData; // 获取等待pk的数据
 let rivalMsg = pkData.rivalMsg; // 对手的信息
 let enterPkData = pkData.enterPkData; // 获取进入pk的数据
 
-let head_portrait = ref(null).value; // pk对象的头像
+let head_portrait = ref(null); // pk对象的头像
 
 
 // 加载完之后处理的事件
 onMounted(() => {
-  head_portrait.innerHTML = rivalMsg.portrait;
+  head_portrait.value.innerHTML = rivalMsg.portrait;
 });
 
 // 关闭等待pk
